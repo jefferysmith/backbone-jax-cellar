@@ -1,12 +1,13 @@
 tpl = {
 
     // Hash of preloaded templates for the app
-    templates: {},
+    templates : {},
 
     // Recursively pre-load all the templates for the app.
-    // This implementation should be changed in a production environment. All the template files should be
+    // This implementation should be changed in a production environment. All
+    // the template files should be
     // concatenated in a single file.
-    loadTemplates: function(names, callback) {
+    loadTemplates : function(names, callback) {
 
         var that = this;
 
@@ -28,7 +29,7 @@ tpl = {
     },
 
     // Get template by name from hash of preloaded templates
-    get: function(name) {
+    get : function(name) {
         return this.templates[name];
     }
 

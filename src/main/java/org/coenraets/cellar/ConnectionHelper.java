@@ -12,46 +12,46 @@ public class ConnectionHelper {
     private static ConnectionHelper instance;
 
     private ConnectionHelper() {
-	url = "jdbc:h2:mem:db1";
+        url = "jdbc:h2:mem:db1";
 
-	try {
-	    Connection c = DriverManager.getConnection(url);
-	    Statement st = c.createStatement();
-	    String s = IOUtils
-		    .toString(getClass().getResourceAsStream("db/h2/cellar.sql"));
-	    String[] inst = s.split(";");
+        try {
+            Connection c = DriverManager.getConnection(url);
+            Statement st = c.createStatement();
+            String s = IOUtils.toString(getClass().getResourceAsStream(
+                    "db/h2/cellar.sql"));
+            String[] inst = s.split(";");
 
-	    for (String sx : inst) {
-		if (!sx.trim().equals("")) {
-		    st.executeUpdate(sx);
-		}
-	    }
+            for (String sx : inst) {
+                if (!sx.trim().equals("")) {
+                    st.executeUpdate(sx);
+                }
+            }
 
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     public static Connection getConnection() throws SQLException {
-	if (instance == null) {
-	    instance = new ConnectionHelper();
-	}
-	try {
-	    return DriverManager.getConnection(instance.url);
-	} catch (SQLException e) {
-	    throw e;
-	}
+        if (instance == null) {
+            instance = new ConnectionHelper();
+        }
+        try {
+            return DriverManager.getConnection(instance.url);
+        } catch (SQLException e) {
+            throw e;
+        }
     }
 
     public static void close(Connection connection) {
-	try {
-	    if (connection != null) {
-		connection.close();
-	    }
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	}
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

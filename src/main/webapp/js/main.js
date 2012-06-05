@@ -1,4 +1,4 @@
-Backbone.View.prototype.close = function () {
+Backbone.View.prototype.close = function() {
     console.log('Closing view ' + this);
     if (this.beforeClose) {
         this.beforeClose();
@@ -9,34 +9,38 @@ Backbone.View.prototype.close = function () {
 
 var AppRouter = Backbone.Router.extend({
 
-    initialize: function() {
-        $('#header').html( new HeaderView().render().el );
+    initialize : function() {
+        $('#header').html(new HeaderView().render().el);
     },
 
-	routes: {
-		""			: "list",
-		"wines/new"	: "newWine",
-		"wines/:id"	: "wineDetails"
-	},
+    routes : {
+        "" : "list",
+        "wines/new" : "newWine",
+        "wines/:id" : "wineDetails"
+    },
 
-	list: function() {
+    list : function() {
         this.before();
-  	},
+    },
 
-	wineDetails: function(id) {
+    wineDetails : function(id) {
         this.before(function() {
-			var wine = app.wineList.get(id);
-		    app.showView( '#content', new WineView({model: wine}) );
+            var wine = app.wineList.get(id);
+            app.showView('#content', new WineView({
+                model : wine
+            }));
         });
-  	},
+    },
 
-	newWine: function() {
+    newWine : function() {
         this.before(function() {
-    		app.showView( '#content', new WineView({model: new Wine()}) );
+            app.showView('#content', new WineView({
+                model : new Wine()
+            }));
         });
-	},
+    },
 
-    showView: function(selector, view) {
+    showView : function(selector, view) {
         if (this.currentView)
             this.currentView.close();
         $(selector).html(view.render().el);
@@ -44,21 +48,27 @@ var AppRouter = Backbone.Router.extend({
         return view;
     },
 
-    before: function(callback) {
+    before : function(callback) {
         if (this.wineList) {
-            if (callback) callback();
+            if (callback)
+                callback();
         } else {
             this.wineList = new WineCollection();
-       		this.wineList.fetch({success: function() {
-               $('#sidebar').html( new WineListView({model: app.wineList}).render().el );
-               if (callback) callback();
-            }});
+            this.wineList.fetch({
+                success : function() {
+                    $('#sidebar').html(new WineListView({
+                        model : app.wineList
+                    }).render().el);
+                    if (callback)
+                        callback();
+                }
+            });
         }
     }
 
 });
 
-tpl.loadTemplates(['header', 'wine-details', 'wine-list-item'], function() {
+tpl.loadTemplates([ 'header', 'wine-details', 'wine-list-item' ], function() {
     app = new AppRouter();
     Backbone.history.start();
 });

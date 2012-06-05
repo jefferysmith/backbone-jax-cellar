@@ -15,49 +15,53 @@ import javax.ws.rs.core.MediaType;
 @Path("/wines")
 public class WineResource {
 
-	WineDAO dao = new WineDAO();
-	
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Wine> findAll() {
-		System.out.println("findAll");
-		return dao.findAll();
-	}
+    WineDAO dao = new WineDAO();
 
-	@GET @Path("search/{query}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public List<Wine> findByName(@PathParam("query") String query) {
-		System.out.println("findByName: " + query);
-		return dao.findByName(query);
-	}
+    @GET
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public List<Wine> findAll() {
+        System.out.println("findAll");
+        return dao.findAll();
+    }
 
-	@GET @Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Wine findById(@PathParam("id") String id) {
-		System.out.println("findById " + id);
-		return dao.findById(Integer.parseInt(id));
-	}
+    @GET
+    @Path("search/{query}")
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public List<Wine> findByName(@PathParam("query") String query) {
+        System.out.println("findByName: " + query);
+        return dao.findByName(query);
+    }
 
-	@POST
-	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Wine create(Wine wine) {
-		return dao.create(wine);
-	}
+    @GET
+    @Path("{id}")
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Wine findById(@PathParam("id") String id) {
+        System.out.println("findById " + id);
+        return dao.findById(Integer.parseInt(id));
+    }
 
-	@PUT @Path("{id}")
-	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Wine update(Wine wine) {
-		System.out.println("Updating wine: " + wine.getName());
-		dao.update(wine);
-		return wine;
-	}
-	
-	@DELETE @Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public void remove(@PathParam("id") int id) {
-		dao.remove(id);
-	}
+    @POST
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Wine create(Wine wine) {
+        return dao.create(wine);
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Wine update(Wine wine) {
+        System.out.println("Updating wine: " + wine.getName());
+        dao.update(wine);
+        return wine;
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public void remove(@PathParam("id") int id) {
+        dao.remove(id);
+    }
 
 }
